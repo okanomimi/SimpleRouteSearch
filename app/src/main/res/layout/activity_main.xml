@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
-
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:weightSum="1"
+    android:layout_alignParentStart="true">
     <fragment
         android:id="@+id/map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="0.7"
         class="com.google.android.gms.maps.SupportMapFragment" />
-</RelativeLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/map"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_weight="0.3"
+        android:layout_alignParentStart="true">
+
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="経路詳細表示"
+            android:id="@+id/routeInfo" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="記録"
+            android:id="@+id/kiroku" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="キャンセル"
+            android:id="@+id/cansel" />
+        <Spinner
+            android:layout_width="94dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:entries="@array/list"
+            />
+    </LinearLayout>
+</LinearLayout>

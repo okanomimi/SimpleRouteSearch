@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,8 +43,10 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-
-    public String travelMode = "driving";//default
+    public TkyJavaLibs t ;
+    //    public String travelMode = "driving";//default
+//    public String travelMode = "";//default
+    public String travelMode = "TRANSIT" ;
     private int touchNum = 0 ;      // the number of touch
     private LatLng fromPoint ;      // the point of from
     private LatLng toPoint ;      // the point of to
@@ -59,20 +62,31 @@ public class MapsActivity extends FragmentActivity {
 
     public PopupWindow mPopupWindow ;
     public String routeDataText = "" ;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_maps);
         setContentView(R.layout.activity_main);
-
+    t = new TkyJavaLibs();
         setUpMapIfNeeded();
 
         //プログレス
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("検索中だす......");
+        progressDialog.setMessage("検索中");
         progressDialog.hide();
 
+
+        Button showRouteInfoBtn = (Button) findViewById(R.id.routeInfo);
+        showRouteInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMapInfo();
+            }
+        });
     }
 
     @Override
@@ -121,7 +135,7 @@ public class MapsActivity extends FragmentActivity {
 
         CameraUpdate cu = CameraUpdateFactory.newLatLng(new LatLng(43.0675, 141.350784));
         mMap.moveCamera(cu);
-
+        mMap.setMyLocationEnabled(true);
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -132,8 +146,12 @@ public class MapsActivity extends FragmentActivity {
                 }else if(markerPoints.size() == 1) {
                     markerPoints.add(latLng) ;
                     mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+//                    Spinner spinner = (Spinner) findViewById(R.id.spinner);
+//                    travelMode = (String) spinner.getSelectedItem();
                     routeSearch();
                     markerPoints = new ArrayList<LatLng>();
+                }else{
+
                 }
                //二回目のタッチの処理
             }
@@ -190,6 +208,7 @@ public class MapsActivity extends FragmentActivity {
         String str_dest = "destination="+dest.latitude+","+dest.longitude;
         String sensor = "sensor=false";
 
+        t.log(travelMode) ;
         //パラメータ
         String parameters = str_origin+"&"+str_dest+"&"+sensor + "&language=ja" + "&mode=" + travelMode;
 
@@ -399,7 +418,6 @@ public class MapsActivity extends FragmentActivity {
 
     private void showMapInfo(){
 
-        Toast.makeText(MapsActivity.this, "ルート情報を取得できませんでした", Toast.LENGTH_LONG).show();
         mPopupWindow = new PopupWindow(MapsActivity.this);
         // レイアウト設定
 //        View popupView = getLayoutInflater().inflate(R.layout.popup_route_info, null);
@@ -454,5 +472,6 @@ public class MapsActivity extends FragmentActivity {
         downloadTask.execute(url);
 
     }
+
 
 }

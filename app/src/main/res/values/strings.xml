@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">SimpleRouteSearch</string>
     <string name="title_activity_maps">Map</string>
+
+
+    <string-array name="list">
+    <item>driving</item>
+    <item>walking</item>
+    <item>transit</item>
+    </string-array>
 </resources>
