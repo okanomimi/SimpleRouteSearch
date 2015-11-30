@@ -87,6 +87,14 @@ public class MapsActivity extends FragmentActivity {
                 showMapInfo();
             }
         });
+
+        Button dismissRouteInfoBtn = (Button) findViewById(R.id.dismissRouteInfo);
+        dismissRouteInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
     }
 
     @Override
@@ -141,6 +149,7 @@ public class MapsActivity extends FragmentActivity {
             public void onMapClick(LatLng latLng) {
                //最初のタッチの処理
                 if (markerPoints.size() < 1) {
+                    mMap.clear() ;
                     markerPoints.add(latLng);
                     mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
                 }else if(markerPoints.size() == 1) {
